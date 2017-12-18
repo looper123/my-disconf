@@ -46,6 +46,7 @@ public class JedisConfig  {
      *
      * @return
      */
+//    获取配置文件下的配置项
     @DisconfFileItem(name = "redis.port", associateField = "port")
     public int getPort() {
         return port;

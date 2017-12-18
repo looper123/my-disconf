@@ -10,15 +10,77 @@
     <!--aop-->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-
+    <!-- 使用disconf必须添加以下配置 -->
     <!--初始化spring 容器 并且完成第一次扫描-->
     <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
           destroy-method="destroy">
         <property name="scanPackage" value="com.quark.config"/>
     </bean>
+    <!--callback 必须bean-->
     <!-- 二次扫描（在第一次扫描后 扫描需要callback的类 并且放到disconfConfUpdates (其实是一个list)中去） 不配置这个bean 会导致通知无法生效-->
     <bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
           init-method="init" destroy-method="destroy">
     </bean>
+
+
+    <!-- 使用托管方式的disconf配置(优点 无代码侵入, 缺点 配置更改不会自动加载到bean中去  必须写回调来重新加载bean  )-->
+    <bean id="configproperties_no_reloadable_disconf"
+          class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>myserver.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!--spring 的bean  远程配置更新后不会reload bean-->
+    <bean id="propertyConfigurerForProject1"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="propertiesArray">
+            <list>
+                <ref bean="configproperties_no_reloadable_disconf"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="myServer" class="com.quark.config.baseOnXml.notReloadBean.MyServer">
+        <!--加载xml中的属性配置到bean 而不会加载远程配置-->
+        <property name="server" value="127.0.0.1:8081"/>
+        <property name="retry" value="5"/>
+    </bean>
+
+
+    <!-- 使用托管方式的disconf配置(无代码侵入, 配置更改会自动reload)-->
+    <bean id="configproperties_disconf"
+          class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <!--只支持.properties 文件对应的bean 自动更新-->
+                <value>classpath:/autoconfig.properties</value>
+                <value>classpath:/autoconfig2.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!--baidu disconf 的bean  扩展了spring的DefaultPropertyPlaceholderConfigurer  远程配置更新后会reload bean-->
+    <bean id="propertyConfigurer"
+          class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="propertiesArray">
+            <list>
+                <ref bean="configproperties_disconf"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="autoService" class="com.quark.config.baseOnXml.reloadBean.AutoService">
+        <!--不会加载此属性在xml中的配置 会自动注入远程配置到bean-->
+        <property name="auto" value="${auto=100}"/>
+    </bean>
+
+    <bean id="autoService2" class="com.quark.config.baseOnXml.reloadBean.AutoService2">
+        <!--不会加载此属性在xml中的配置 会自动注入远程配置到bean-->
+        <property name="auto2" value="${auto2=100}"/>
+    </bean>
+
 
 </beans>

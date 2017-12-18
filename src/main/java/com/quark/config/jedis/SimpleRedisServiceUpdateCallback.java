@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Scope("singleton")
 @DisconfUpdateService(classes={JedisConfig.class})
+//效果同上@DisconfUpdateService(confFileKeys = { "redis.properties" })
 public class SimpleRedisServiceUpdateCallback implements IDisconfUpdate {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(SimpleRedisServiceUpdateCallback.class);
