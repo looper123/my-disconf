@@ -2,6 +2,8 @@ package com.quark.config.Coefficients;
 
 import com.baidu.disconf.client.common.annotations.DisconfFile;
 import com.baidu.disconf.client.common.annotations.DisconfItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 @DisconfFile(filename = "coefficients.properties")
 public class Coefficients {
+
+    private static final Logger logger = LoggerFactory.getLogger(Coefficients.class);
 
     public static final String key = "discountRate";
 
@@ -29,6 +33,7 @@ public class Coefficients {
     }
 
     public void setDiscount(Double discount) {
+        logger.info("Coefficients's property has changed discount="+discount);
         this.discount = discount;
     }
 }

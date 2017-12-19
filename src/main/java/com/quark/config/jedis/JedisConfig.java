@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by ZhenpengLu on 2017/12/14.
  * 注解类 连接disconfig配置 自动同步
+ * 文件初始化/更新后通过setter方法把所有的属性通过setter方法注入到bean中
  */
 @Service
 @Scope("singleton")
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 //@DisconfUpdateService(classes = {JedisConfig.class})
 //@EnableAsync(proxyTargetClass=true)
 //@EnableCaching
-public class JedisConfig  {
+public class JedisConfig {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(JedisConfig.class);
 
@@ -38,6 +39,8 @@ public class JedisConfig  {
     }
 
     public void setHost(String host) {
+
+        LOGGER.info("redis host  property has changed host=" + host);
         this.host = host;
     }
 
@@ -53,6 +56,7 @@ public class JedisConfig  {
     }
 
     public void setPort(int port) {
+        LOGGER.info("redis host  property has changed  port=" + port);
         this.port = port;
     }
 
