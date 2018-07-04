@@ -29,7 +29,6 @@ import java.util.TreeMap;
 @SpringBootTest
 public class MyDisconfigApplicationTests {
 
-
 	@Test
 	public void contextLoads() {
 		Map<String, Object> map = DisconfDataGetter.getByFile("redis.properties");
