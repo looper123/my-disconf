@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * 文件初始化/更新后通过setter方法把所有的属性通过setter方法注入到bean中
  */
 @Service
-@Scope("singleton")
+@Scope("singleton") //singleton的意义 ： 如果是多例的话无法保证和properties文件一一对应
 @DisconfFile(filename = "redis.properties")
 //@DisconfUpdateService(classes = {JedisConfig.class})
 //@EnableAsync(proxyTargetClass=true)
