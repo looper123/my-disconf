@@ -8,5 +8,5 @@ jdk:
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true
 
 
-after_success:
-- mvn clean test cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
+#after_success:
+#- mvn clean test cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
