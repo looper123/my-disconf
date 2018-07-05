@@ -1,7 +1,7 @@
-![Build Status](https://www.travis-ci.org/looper123/my-disconfig.svg?branch=master) 
+![Build Status](https://www.travis-ci.org/looper123/my-disconf.svg?branch=master) 
 ![license](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-[![Coverage Status](https://coveralls.io/repos/github/looper123/my-disconfig/badge.svg)](https://coveralls.io/github/looper123/my-disconfig)
-![release](https://img.shields.io/github/release/looper123/my-disconfig.svg)
+[![Coverage Status](https://coveralls.io/repos/github/looper123/my-disconf/badge.svg)](https://coveralls.io/github/looper123/my-disconf)
+![release](https://img.shields.io/github/release/looper123/my-disconf.svg)
 
 ### 环境搭建
 - 参考 http://disconf.readthedocs.io/zh_CN/latest/install/src/01.html
